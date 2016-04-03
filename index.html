@@ -8,21 +8,62 @@
     <script src="build/react-dom.js"></script>
     <style type="text/css" media="screen">
       h1 {
-        font-family: monospace;
         font-size: 72px;
         letter-spacing: 0.1em;
+        position: relative;
         border: 1px solid black;
         text-align: center;
+        margin-top: 4.0 em;
+        margin-left: 10px;
+        margin-right: 10px;
         padding: 10px;
       }
 
+      a {
+        text-decoration: none;
+        color: #FEBCBC;
+      }
+
+      #link {
+        text-align: right;
+        font-size: 1.3em;
+        padding: 10px;
+      }
+
+      li {
+          float: right;
+          padding: 1.0em;
+          text-decoration: none;
+          list-style: none;
+      }
+      #fb {
+          color: rgb(99, 199, 249);
+      }
+
+      #fb :hover {
+          color: rgb(70, 150, 150);
+      }
+
+      a:hover {
+        color: #BF9090;
+      }
+
       body {
+        font-family: monospace;
         margin: 0;
       }
 
     </style>
   </head>
   <body>
+    <div id='link'>
+        <ul>
+            <li>visit.<a href="http://github.com/princedhaliwal" id="gh">github()</a>
+            </li>
+            <li>visit.<a href="http://facebook.com/prince.dhaliwal.7796" id="fb">facebook()</a>
+            </li>
+        </ul>
+    </div>
     <div id="example"></div>
     <div id="content"></div>
     <script type="text/javascript">
