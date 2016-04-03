@@ -1,1 +1,35 @@
-"Hello, World, currently I am working on this project, so wait till then" 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <style type="text/css" media="screen">
+      h1 {
+        font-family: monospace;
+        font-size: 72px;
+        letter-spacing: 0.1em;
+        border: 1px solid black;
+        text-align: center;
+        padding: 10px;
+      }
+
+      body {
+        margin: 0;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="example"></div>
+    <div id="content"></div>
+    <script type="text/javascript">
+      ReactDOM.render(React.createElement(
+        'h1',
+        null,
+        'Hello, world!'
+      ), document.getElementById('example'));
+    </script>
+  </body>
+</html>
