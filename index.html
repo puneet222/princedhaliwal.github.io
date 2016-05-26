@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./css/hover-min.css" rel="stylesheet" />
     <!--<script src="https://use.fontawesome.com/020642a533.js"></script>-->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous"> -->
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
     <style type="text/css" media="screen">
 
@@ -291,6 +292,21 @@
           animation-name: slideInDown;
         }
 
+        @keyframes shrinkForSection {
+          from {
+              width: 80%;
+          }
+
+          to {
+              width: 0;
+          }
+        }
+
+        .shrinkForSection4 {
+          -webkit-animation-name: shrinkForSection;
+          animation-name: shrinkForSection;
+        }
+
         @keyframes shrinkLittle {
           from {
               width: 100%;
@@ -395,8 +411,6 @@
       }
 
       .red-bold-text {
-          font-family: Roboto;
-          font-weight: 700;
           color: #A17426;
       }
 
@@ -569,6 +583,12 @@
             font-size: 2em;
             text-align: center;
         }
+
+        .second {
+            background-color: #222;
+            width: 100%;
+            margin: 0;
+        }
     </style>
     <style type="text/css" src="./css/hover-min.css"></style>
     <script src="js/jquery.js" type="text/javascript"></script>
@@ -587,7 +607,7 @@
               </div>
               <div class="vertical-half welcome hidden">
                   <div class="h1-cont">
-                      <h1 class="welcome-text hidden">Prince<span class="red-bold-text"> Dhaliwal</span></h1>
+                      <h1 class="welcome-text hidden">PRINCE<span class="red-bold-text"> DHALIWAL</span></h1>
                   </div>
                   <!-- this text is hidden until a proper position comes -->
 
@@ -618,8 +638,11 @@
               </div>
           </span>
       </section>
-      <section class="second hidden" id="section2">
-          Prince Dhaliwal
+      <section class="second about-this hidden" id="section2">
+            <div class="about-heading">
+                <i class="fa fa-file-code-o"></i>
+
+            </div>
       </section>
       <div class="project-head hidden" style="position :absolute; top: 0; width: 100%; background-color: #222; z-index: 9999">
           Projects
@@ -660,11 +683,13 @@ $(window).ready(function init() {
 });
 
     function displayShortMessage(message) {
+        message_is_shown = true;
         $(".dialog-text").html(message);
         $(".small-dialog").removeClass("hidden fadeOutUp").addClass("slideInDown");
     }
 
     function removeShortMessage() {
+        message_is_shown = false;
         $(".small-dialog").removeClass("slideInDown").addClass("fadeOutUp");
     }
 
@@ -691,6 +716,7 @@ $(window).ready(function init() {
   var got_repos = false;
   var shown = 0;
   var intro_para_text_inner;
+  var message_is_shown = false;
 
   /* This code is taken from the stack overflow question http://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery */
   var isMobile = false; //initiate as false
@@ -768,7 +794,10 @@ $(window).ready(function init() {
                               $(this).off("animationend");
                               $(".project-text").removeClass("hidden");
                               $(this).css("width", "100%");
-                              $(this).removeClass("expandRight").addClass("shrinkLittle");
+                              $(this).removeClass("expandRight").addClass("shrinkLittle").on("animationend", function() {
+                                  $(this).css("width", "80%");
+                                  $(this).off("animationend");
+                              });
                               $(".loading-icon").removeClass("hidden");
                               $(".loading").removeClass("hidden");
                           });
@@ -860,13 +889,29 @@ $(window).ready(function init() {
           // show the next page of the repos
           console.log("replacing repos: repo_view_required=" + repo_view_required);
           $(".repo").slice(0, 3).removeClass("fadeInUp").addClass("fadeOutUp").on("animationend", function() {
-              $(this).off("animationend");
-              $(this).remove();
+              $(this).addClass("hidden").css("margin-top", "-100%");
               $(".repo").removeClass("fadeInUp").addClass("slideInUp");
           });
           repo_view_number++;
       } else {
-          console.log("replaced all");
+          if (!isMobile) {
+              if (message_is_shown)
+                  removeShortMessage();
+              $(".project-text").addClass("animated fadeAndZoomOut").on("animationend", function() {
+                  $(this).off("animationend").addClass("hidden");
+                  $(".repo").removeClass("slideInUp").addClass("fadeAndZoomOut").on("animationend", function() {
+                      $(this).remove();
+                      $(".intro-para").removeClass("zoomInWidth shrinkLittle");
+                      $(".intro-para").addClass("shrinkForSection4").on("animationend", function() {
+                           $(".intro-section").addClass("animated fadeOutUp").on("animationend", function() {
+                               $(".intro-section").addClass("hidden");
+                               $(".second").removeClass("hidden");
+                           });
+                      });
+
+                  });
+              });
+          }
       }
   }
 
