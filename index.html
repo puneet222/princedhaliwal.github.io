@@ -704,6 +704,9 @@ $(window).ready(function init() {
   }
   function onResize() {
       $("section").css("height", calculateSectionHeight() + "px");
+      if (second_shown) {
+          $(".second").css("margin-top", -calculateSectionHeight() + "px");
+      }
   }
 
   var last_scroll_position = 0;
@@ -717,6 +720,7 @@ $(window).ready(function init() {
   var shown = 0;
   var intro_para_text_inner;
   var message_is_shown = false;
+  var second_shown = true;
 
   /* This code is taken from the stack overflow question http://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery */
   var isMobile = false; //initiate as false
@@ -903,10 +907,14 @@ $(window).ready(function init() {
                       $(this).remove();
                       $(".intro-para").removeClass("zoomInWidth shrinkLittle");
                       $(".intro-para").addClass("shrinkForSection4").on("animationend", function() {
-                           $(".intro-section").addClass("animated fadeOutUp").on("animationend", function() {
-                               $(".intro-section").addClass("hidden");
-                               $(".second").removeClass("hidden");
-                           });
+                          $(this).off("animationend");
+                          $(".second").removeClass("hidden");
+                          $(".second").css("margin-top", "-" + calculateSectionHeight() + "px");
+                          second_shown = true;
+                           // $(".intro-section").addClass("animated fadeOutUp").on("animationend",  function() {
+                           //     //
+                           //     // $(".second").removeClass("hidden");
+                           // });
                       });
 
                   });
