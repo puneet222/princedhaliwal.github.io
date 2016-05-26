@@ -7,20 +7,16 @@
     <link href="./css/hover-min.css" rel="stylesheet" />
     <!--<script src="https://use.fontawesome.com/020642a533.js"></script>-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
     <style type="text/css" media="screen">
-    @font-face {
-        font-family: "RobotoThin";
-        src: url("fonts/Roboto-Thin.ttf");
-    }
-    @font-face {
-        font-family: "RobotoBold";
-        src: url("fonts/Roboto-Bold.ttf");
-    }
+
       body {
         margin: 0;
         width: 100%;
         font-size: 1em;
         color: #222;
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
         overflow: hidden;
       }
       .content {
@@ -326,6 +322,23 @@
           animation-name: shrinkWidthToZero;
         }
 
+        @-webkit-keyframes slideInUp {
+          from {
+            -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+            visibility: visible;
+          }
+
+          to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+          }
+        }
+
+        .slideInUp {
+            animation-name: slideInUp;
+        }
+
        .zoom-up {
            animation-name: zoomUp;
        }
@@ -374,21 +387,23 @@
 
       .welcome-text {
           margin: 0;
-          font-family: RobotoThin, sans;
-          font-weight: normal;
+          font-family: Roboto, sans;
+          font-weight: 100;
           text-align: center;
           width: 100%;
           font-size: 4em;
       }
 
       .red-bold-text {
-          font-family: RobotoBold;
+          font-family: Roboto;
+          font-weight: 700;
           color: #A17426;
       }
 
       .hidden {
           display: none;
           opacity: 0;
+          visibility: hidden;
       }
 
       .second {
@@ -433,8 +448,18 @@
           margin-top: 50%;
           font-size: 3em;
           letter-spacing: 0.2em;
-          font-family: RobotoThin;
+          font-family: Roboto;
+          font-weight: 100;
           transform: rotate(90deg);
+          vertical-align: middle;
+          text-transform: uppercase;
+      }
+
+      .project-head {
+          font-size: 3em;
+          letter-spacing: 0.2em;
+          font-family: Roboto;
+          font-weight: 100;
           vertical-align: middle;
           text-transform: uppercase;
       }
@@ -453,7 +478,8 @@
       .about-me {
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          font-family: RobotoThin, sans;
+          font-family: Roboto, sans-serif;
+          font-weight: 100;
           font-size: 3em;
       }
 
@@ -465,17 +491,21 @@
       }
 
       .loading {
-          vertical-align: middle;
+          font-weight: 100;
           font-size: 5em;
           width: 100%;
           top: 50%;
           text-align: center;
       }
 
-      .loading-icon {
-          align-items: center;
+      .loading-icon, .loading-wrapper {
           width: 100%;
           height: 100%;
+       }
+
+       .loading-wrapper {
+           display: flex;
+           align-items: center;
        }
 
        a {
@@ -545,7 +575,7 @@
   </head>
   <body class="hidden">
   <div class="content">
-      <div class="small-dialog hidden">
+      <div class="small-dialog animated hidden" z-index=99999>
           <h3 class="dialog-text">
                 Use Arrow keys to move
           </h3>
@@ -575,7 +605,9 @@
                         </p>
                     </div>
                     <div class="loading-icon hidden">
-                        <i class="loading fa fa-circle-o-notch fa-spin hidden"></i>
+                        <div class="loading-wrapper">
+                            <i class="loading fa fa-circle-o-notch fa-spin hidden"></i>
+                        </div>
                     </div>
                   </div>
                   <div class="project-text hidden">
@@ -619,13 +651,22 @@ $(window).ready(function init() {
       }, 125);
 
       window.setTimeout(function() {
-          $(".small-dialog").removeClass("hidden").addClass("animated slideInDown")
+          $(".small-dialog").removeClass("hidden").addClass("slideInDown");
       }, 1000);
 
       window.setTimeout(function() {
           $(".small-dialog").removeClass("slideInDown").addClass("fadeOutUp");
-      }, 2500)
+      }, 2500);
 });
+
+    function displayShortMessage(message) {
+        $(".dialog-text").html(message);
+        $(".small-dialog").removeClass("hidden fadeOutUp").addClass("slideInDown");
+    }
+
+    function removeShortMessage() {
+        $(".small-dialog").removeClass("slideInDown").addClass("fadeOutUp");
+    }
 
   function fadeIn(element) {
       $(element).removeClass("hidden");
@@ -644,11 +685,12 @@ $(window).ready(function init() {
   var sectionCounter = 0;
   var github_url = "https://api.github.com/";
   var github_get_request = "users/PrinceDhaliwal/repos";
-  var repos = 0;
+  var repos = 0, repos_backup = [];
   var repo_view_required = 0;
   var repo_view_number = 0;
   var got_repos = false;
   var shown = 0;
+  var intro_para_text_inner;
 
   /* This code is taken from the stack overflow question http://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery */
   var isMobile = false; //initiate as false
@@ -659,20 +701,26 @@ $(window).ready(function init() {
   function prepareSection2() {
       $(".header-i").removeClass("fadeInUp").addClass("fadeOutUp").on("animationend", function() {
           $(this).remove();
+          $(this).off("animationend");
       });
       $(".welcome2").addClass("animated moveUp").on("animationend", function() {
           $(this).remove();
+          $(this).off("animationend");
       });
   }
 
   function showSection2() {
       if (!isMobile) {
           $(".welcome").removeClass("fadeInUp").addClass("zoom-up").on("animationend", function() {
+                  $(this).off("animationend");
                   $(".h1-cont").addClass("animated moveLeft").on("animationend", function() {
+                      $(this).off("animationend");
                       $(this).css("float", "left");
                       $(".intro-para").removeClass("hidden").addClass("animated zoomInHeight").on("animationend", function() {
+                          $(this).off("animationend");
                           $(this).css("height", "100%").removeClass("zoomInHeight").addClass("zoomInWidth")
                               .on("animationend", function() {
+                                  $(this).off("animationend");
                                   $(this).css("width", "50%");
                                   $(".intro-para-text").removeClass("hidden");
                               });
@@ -681,12 +729,16 @@ $(window).ready(function init() {
            });
       } else {
            $(".welcome").removeClass("fadeInUp").addClass("zoom-up").on("animationend", function() {
+                  $(this).off("animationend");
                   $(".h1-cont").addClass("animated fadeOutUp").on("animationend", function() {
+                      $(this).off("animationend");
                       $(this).remove();
                       $(".intro-para").removeClass("hidden").addClass("animated zoomInHeight").on("animationend", function() {
+                          $(this).off("animationend");
                           $(this).css({
                               "height": "100%",
                           }).removeClass("zoomInHeight").addClass("zoomInWidthH").on("animationend", function() {
+                                  $(this).off("animationend");
                                   $(this).css("width", "100%");
                                   $(".intro-para-text").removeClass("hidden").addClass("animated fadeInUp").css("padding", "1em");
                                   $(".intro-para").css("overflowY", "auto");
@@ -698,34 +750,42 @@ $(window).ready(function init() {
   }
 
   function prepareSection3() {
+
       if (!isMobile) {
           $(".welcome-text").removeClass("fadeInUp").addClass("animated fadeOutUp").on("animationend", function() {
               $(this).remove();
+              $(this).off("animationend");
               $(".intro-para-text").addClass("animated fadeAndZoomOut").on("animationend", function() {
-                  $(this).addClass("hidden");
+                  intro_para_text_inner = $(this).html();
+                  $(this).off("animationend");
+                  $(this).remove();
               });
               $(".h1-cont").removeClass("zoom-up").addClass("shrinkWidthToZero")
                   .on("animationend", function() {
+                      $(this).off("animationend");
                       $(".intro-para").addClass("expandRight")
                           .on("animationend", function() {
+                              $(this).off("animationend");
                               $(".project-text").removeClass("hidden");
                               $(this).css("width", "100%");
                               $(this).removeClass("expandRight").addClass("shrinkLittle");
                               $(".loading-icon").removeClass("hidden");
-                              $(".loading").removeClass("hidden fa-spin").addClass("animated fadeInUp")
-                                  .on("animationend", function() {
-                                      $(this).removeClass("animated fadeInUp").addClass("fa-spin");
-                                  });
+                              $(".loading").removeClass("hidden");
                           });
                   });
 
+              displayShortMessage("Loading repos ...");
           });
-      } else { $(".intro-para-text").removeClass("fadeInUp").addClass("fadeAndZoomOut").on("animationend", function() {
-                  $(this).addClass("hidden");
+      } else {
+          $(".intro-para-text").removeClass("fadeInUp").addClass("fadeAndZoomOut").on("animationend", function() {
+                  intro_para_text_inner = $(this).html();
+                  $(this).remove();
+                  $(this).off("animationend");
+                  $(".project-text").remove();
                   $(".project-head").removeClass("hidden").addClass("animated zoomInHeightH");
                   $(".loading-icon").removeClass("hidden");
                   $(".loading").removeClass("hidden");
-                  $(".loading-text").removeClass("hidden");
+                  displayShortMessage("Loading repos ...");
               });
 
       }
@@ -733,13 +793,17 @@ $(window).ready(function init() {
 
   function createHtml(data) {
       var html = "";
+      repos_backup = data;
       data.sort(function(a, b) {
           return b.stargazers_count - a.stargazers_count;
       });
+      repos = 0;
       for (var i = 0; i < data.length; i++) {
           // I am not going to show my forked repositories
           if (data[i].fork)
               continue;
+
+          repos++;
           if (!isMobile) {
               html += '<div class="repo hidden"><div class="repo-inner hvr-grow">';
           } else {
@@ -755,25 +819,35 @@ $(window).ready(function init() {
 
   function showSection3() {
       try {
-          $.get(github_url + github_get_request, function(data, status) {
+          $.get(github_url + github_get_request).done(function(data) {
               repos = data.length;
+              got_repos = true;
+              removeShortMessage();
               if (!isMobile) {
                   $(".loading").removeClass("fa-spin").addClass("animated fadeAndZoomOut").on("animationend", function() {
+                      $(this).off("animationend");
                       $(".loading-icon").html(createHtml(data));
                       $(".repo:odd").css("background-color", "#222").css("color", "#A17426");
                       $(".repo").removeClass("hidden").addClass("animated fadeInUp");
+
                       shown = 6;
                       repo_view_required = (repos - shown) / 3 + ((repos - shown) % 3 ? 1 : 0);
                   });
               } else {
-                  console.log("got data");
                   $(".loading").removeClass("fa-spin").addClass("animated fadeAndZoomOut")
                       .on("animationend", function() {
+                          $(this).off("animationend");
                           $(".loading-icon").html(createHtml(data));
                           $(".mobile-repo:odd").css("background-color", "#222").css("color", "#A17426");
                           $(".mobile-repo").removeClass("hidden").addClass("animated fadeInUp");
                       })
               }
+          }).fail(function() {
+              displayShortMessage("Unable to load request!<br /><i class='retry fa fa-repeat></i><span class='retry'>Retry?</span>");
+              $(".retry").on("click", function() {
+                  displayShortMessage("Retrying ..");
+                  showSection3();
+              });
           });
       } catch (e) {
           $(".loading-icon").html('<h1 class="not-found">Error, try to reload</h1>');
@@ -784,9 +858,15 @@ $(window).ready(function init() {
       // we can't show all the repos in one view
       if (repos > 6 && repo_view_number < repo_view_required) {
           // show the next page of the repos
-          var r = $("repo");
-          var toremove = r.slice(repo_view_number * 3, repo_view_number * 3 + 1);
-          toremove.removeClass("fadeInUp").addClass("fadeOutUp");
+          console.log("replacing repos: repo_view_required=" + repo_view_required);
+          $(".repo").slice(0, 3).removeClass("fadeInUp").addClass("fadeOutUp").on("animationend", function() {
+              $(this).off("animationend");
+              $(this).remove();
+              $(".repo").removeClass("fadeInUp").addClass("slideInUp");
+          });
+          repo_view_number++;
+      } else {
+          console.log("replaced all");
       }
   }
 
