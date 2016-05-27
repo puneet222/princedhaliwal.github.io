@@ -585,12 +585,94 @@
         .second {
             background-color: #222;
             width: 100%;
+            color: #A17426;
             margin: 0;
         }
 
         .about-heading {
             color: #A17426;
             display: inline-block;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .about-heading-text {
+            font-weight: 100;
+            font-size: 3em;
+            width: 100%;
+            font-family: Roboto;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        .code-icon {
+            font-size: 3em;
+            width: 100%;
+            text-align: center;
+            margin-top: 1em;
+        }
+
+        .about-description-cont {
+            width: 60%;
+            margin-left: 20%;
+            font-family: Roboto;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        .contrib-table {
+            position: absolute;
+            width: 80%;
+            margin-left: 10%;
+            display: flex;
+            align-items: center;
+        }
+
+        .td {
+            padding: 1em;
+            border: 2px solid #A17426;
+            margin: 0.5em;
+            text-align: center;
+        }
+
+        footer {
+            position: absolute;
+            color: #222;
+            height: 10%;
+            background-color: #A17426;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .footer-small-para {
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        .edit {
+            width: 30%;
+            margin-left: 10%;
+        }
+
+        .social {
+            position: absolute;
+            margin-top: 1%;
+            margin-right:5%;
+            width: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .facebook-link, .github-link {
+            display: inline;
+            font-size: 2em;
+            margin-left: 1em;
+            vertical-align: middle;
         }
     </style>
     <style type="text/css" src="./css/hover-min.css"></style>
@@ -642,24 +724,42 @@
           </span>
       </section>
       <section class="second about-this hidden" id="section2">
-            <div class="about-heading">
-                <i class="fa fa-file-code-o"></i>
-                <h1 class="about-heading-text" style="font-weight: normal">About this website</h1>
-                <p>This is the first ever website designed by me. This is unidirectional website. As you can see you can only
-                    go forward and can't go back (Quick solution, try refreshing your browser). Yeah, this is an unwanted feature.
-                 </p>
+            <div class="about-section">
+               <div class="about-heading">
 
-                <table>
-                    <tr>
-                        <td>animate.css</td>
-                        <td>Hover.css</td>
-                        <td><i class="fa fa-font-awesome"></i>Font Awesome</td>
-                        <td><i class="fa fa-"></i>jQuery</td>
-                        <td><i class="fa fa-html5"></i>HTML5</td>
-                        <td><i class="fa fa-css3"></i>CSS3</td>
-                    </tr>
-                </table>
-                <footer>Made with <i class="fa fa-heart"></i> for <i class="fa fa-chrome"></i>Chrome hosted on <i class="fa fa-github"></i>GitHub</footer>
+                <i class="code-icon fa fa-terminal"></i>
+                <h1 class="about-heading-text">About this website</h1>
+               </div>
+               <div class="about-description-cont">
+                <p clas="about-description">
+                    Built Using
+                 </p>
+                </div>
+                <div class="contrib-table">
+                        <div class="td">Animate.css</div>
+                        <div class="td">Hover.css</div>
+                        <div class="td"><i class="fa fa-font-awesome"></i> Font Awesome</div>
+                        <div class="td"><i class="fa fa-"></i>jQuery</div>
+                        <div class="td"><i class="fa fa-html5"></i> HTML5</div>
+                        <div class="td"><i class="fa fa-css3"></i> CSS3</div>
+                </div>
+                <footer>
+                    <div class="footer-small-para">
+                        Made with <i class="fa fa-heart"></i> for <i class="fa fa-chrome"></i> Chrome. Hosted on <i class="fa fa-github-sqaure"></i>GitHub
+                    </div>
+                    <div class="edit">
+                        <p><a class="hvr-grow" href="https://github.com/PrinceDhaliwal/princedhaliwal.github.io/edit/master/index.html"><i class="fa fa-edit"></i> Edit this website</a></p>
+                    </div>
+                    <div class="social">
+                        <table class="social table">
+                            <tr>
+                                <div class="facebook-link-cont hvr-grow"><a class="facebook-link" href="https://facebook.com/0x1000"><i class="fa fa-facebook-square"></i></a></div>
+                                <div class="github-link-cont hvr-grow"><a class="github-link" href="https://github/com/PrinceDhaliwal"><i class="fa fa-github-square"></i></a></div>
+                            </tr>
+                        </table>
+                    </div>
+                </footer>
+
             </div>
       </section>
       <div class="project-head hidden" style="position :absolute; top: 0; width: 100%; background-color: #222; z-index: 9999">
