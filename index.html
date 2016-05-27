@@ -5,18 +5,16 @@
     <title>Hello World!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./css/hover-min.css" rel="stylesheet" />
-    <!--<script src="https://use.fontawesome.com/020642a533.js"></script>-->
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous"> -->
-    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
     <style type="text/css" media="screen">
-
       body {
         margin: 0;
         width: 100%;
         font-size: 1em;
         color: #222;
         font-family: Roboto, sans-serif;
+        background-color: #222;
         font-weight: 400;
         overflow: hidden;
       }
@@ -441,7 +439,7 @@
           width: 1px;
           vertical-align: middle;
           background-color: #A17426;
-          color: black;
+          color: #222;
           float: right;
           z-index: 1;
       }
@@ -589,6 +587,11 @@
             width: 100%;
             margin: 0;
         }
+
+        .about-heading {
+            color: #A17426;
+            display: inline-block;
+        }
     </style>
     <style type="text/css" src="./css/hover-min.css"></style>
     <script src="js/jquery.js" type="text/javascript"></script>
@@ -641,7 +644,22 @@
       <section class="second about-this hidden" id="section2">
             <div class="about-heading">
                 <i class="fa fa-file-code-o"></i>
+                <h1 class="about-heading-text" style="font-weight: normal">About this website</h1>
+                <p>This is the first ever website designed by me. This is unidirectional website. As you can see you can only
+                    go forward and can't go back (Quick solution, try refreshing your browser). Yeah, this is an unwanted feature.
+                 </p>
 
+                <table>
+                    <tr>
+                        <td>animate.css</td>
+                        <td>Hover.css</td>
+                        <td><i class="fa fa-font-awesome"></i>Font Awesome</td>
+                        <td><i class="fa fa-"></i>jQuery</td>
+                        <td><i class="fa fa-html5"></i>HTML5</td>
+                        <td><i class="fa fa-css3"></i>CSS3</td>
+                    </tr>
+                </table>
+                <footer>Made with <i class="fa fa-heart"></i> for <i class="fa fa-chrome"></i>Chrome hosted on <i class="fa fa-github"></i>GitHub</footer>
             </div>
       </section>
       <div class="project-head hidden" style="position :absolute; top: 0; width: 100%; background-color: #222; z-index: 9999">
@@ -752,7 +770,7 @@ $(window).ready(function init() {
                               .on("animationend", function() {
                                   $(this).off("animationend");
                                   $(this).css("width", "50%");
-                                  $(".intro-para-text").removeClass("hidden");
+                                  $(".intro-para-text").removeClass("hidden").addClass("animated fadeInUp");
                               });
                       });
                   });
@@ -785,7 +803,7 @@ $(window).ready(function init() {
           $(".welcome-text").removeClass("fadeInUp").addClass("animated fadeOutUp").on("animationend", function() {
               $(this).remove();
               $(this).off("animationend");
-              $(".intro-para-text").addClass("animated fadeAndZoomOut").on("animationend", function() {
+              $(".intro-para-text").removeClass("fadeInUp").addClass("fadeAndZoomOut").on("animationend", function() {
                   intro_para_text_inner = $(this).html();
                   $(this).off("animationend");
                   $(this).remove();
@@ -904,17 +922,14 @@ $(window).ready(function init() {
               $(".project-text").addClass("animated fadeAndZoomOut").on("animationend", function() {
                   $(this).off("animationend").addClass("hidden");
                   $(".repo").removeClass("slideInUp").addClass("fadeAndZoomOut").on("animationend", function() {
+                      $(this).off("animationend");
                       $(this).remove();
                       $(".intro-para").removeClass("zoomInWidth shrinkLittle");
-                      $(".intro-para").addClass("shrinkForSection4").on("animationend", function() {
+                      $(".intro-section").addClass("animated shrinkForSection4").on("animationend", function() {
                           $(this).off("animationend");
                           $(".second").removeClass("hidden");
                           $(".second").css("margin-top", "-" + calculateSectionHeight() + "px");
                           second_shown = true;
-                           // $(".intro-section").addClass("animated fadeOutUp").on("animationend",  function() {
-                           //     //
-                           //     // $(".second").removeClass("hidden");
-                           // });
                       });
 
                   });
