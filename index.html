@@ -688,6 +688,8 @@
                 Use Arrow keys to move
           </h3>
       </div>
+
+
       <section class="intro-section" id="section1">
           <span class="span-full">
               <div class="vertical-half welcome2">
@@ -705,11 +707,10 @@
                         <h1 class="about-me">About Me</h1>
                         <p class="swag">Coder<br />Developer<br/>Student</p>
                         <p>
-                            My real name is Pushpinder Singh, a student at PEC University of Technology.
-                            I am interested in low-level stuff like how computer works, how microprocessor works.
-                            I love C & C++ programming languages. Out of all operating systems, I will always choose
-                            Linux (Because it is open source and powerful).
-
+                            Pushpinder Singh aka Prince Dhaliwal is a student at PEC University of Technology.
+                            He prefers to talk in first person instead of third person. <br />
+                            Coding is my passion. I love C & C++ programming languages as most of my projects in next section says.
+                            I love web and poster designing. I have learned a lot from open-source world.
                         </p>
                     </div>
                     <div class="loading-icon hidden">
@@ -726,6 +727,9 @@
               </div>
           </span>
       </section>
+    <div class="first repo-section hidden">
+
+    </div>
       <section class="second about-this hidden" id="section2">
             <div class="about-section">
                <div class="about-heading">
@@ -878,25 +882,6 @@ $(window).ready(function init() {
                       });
                   });
            });
-      } else {
-           $(".welcome").removeClass("fadeInUp").addClass("zoom-up").on("animationend", function() {
-                  $(this).off("animationend");
-                  $(".h1-cont").addClass("animated fadeOutUp").on("animationend", function() {
-                      $(this).off("animationend");
-                      $(this).remove();
-                      $(".intro-para").removeClass("hidden").addClass("animated zoomInHeight").on("animationend", function() {
-                          $(this).off("animationend");
-                          $(this).css({
-                              "height": "100%",
-                          }).removeClass("zoomInHeight").addClass("zoomInWidthH").on("animationend", function() {
-                                  $(this).off("animationend");
-                                  $(this).css("width", "100%");
-                                  $(".intro-para-text").removeClass("hidden").addClass("animated fadeInUp").css("padding", "1em");
-                                  $(".intro-para").css("overflowY", "auto");
-                              });
-                      });
-                  });
-            });
       }
   }
 
@@ -930,18 +915,6 @@ $(window).ready(function init() {
 
               displayShortMessage("Loading repos ...");
           });
-      } else {
-          $(".intro-para-text").removeClass("fadeInUp").addClass("fadeAndZoomOut").on("animationend", function() {
-                  intro_para_text_inner = $(this).html();
-                  $(this).remove();
-                  $(this).off("animationend");
-                  $(".project-text").remove();
-                  $(".project-head").removeClass("hidden").addClass("animated zoomInHeightH");
-                  $(".loading-icon").removeClass("hidden");
-                  $(".loading").removeClass("hidden");
-                  displayShortMessage("Loading repos ...");
-              });
-
       }
   }
 
@@ -987,14 +960,6 @@ $(window).ready(function init() {
                       shown = 6;
                       repo_view_required = (repos - shown) / 3 + ((repos - shown) % 3 ? 1 : 0);
                   });
-              } else {
-                  $(".loading").removeClass("fa-spin").addClass("animated fadeAndZoomOut")
-                      .on("animationend", function() {
-                          $(this).off("animationend");
-                          $(".loading-icon").html(createHtml(data));
-                          $(".mobile-repo:odd").css("background-color", "#222").css("color", "#A17426");
-                          $(".mobile-repo").removeClass("hidden").addClass("animated fadeInUp");
-                      })
               }
           }).fail(function() {
               displayShortMessage("Unable to load request!<br /><i class='retry fa fa-repeat></i><span class='retry'>Retry?</span>");
@@ -1067,16 +1032,20 @@ $(window).ready(function init() {
           }
       }
   }
-
-  window.addEventListener("resize", onResize);
-  window.addEventListener("keydown", onScroll);
-  window.addEventListener("scroll", onScroll);
-  $("body").on("swipe", onScroll);
-  $("#helper").click(function() {
-      var event = { keyCode : '40' };
-      console.log("Clicked");
-      onScroll(event);
-  });
+  if (!isMobile) {
+      window.addEventListener("resize", onResize);
+      window.addEventListener("keydown", onScroll);
+      window.addEventListener("scroll", onScroll);
+      $("body").on("swipe", onScroll);
+      $("#helper").click(function() {
+          var event = { keyCode : '40' };
+          console.log("Clicked");
+          onScroll(event);
+      });
+  } else {
+      $("#helper").remove();
+      $("body").css("overflow", "auto");
+  }
   </script>
   </body>
 </html>
