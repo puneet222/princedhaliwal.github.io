@@ -7,9 +7,12 @@
     <link href="./css/hover-min.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
-    <link href='css/style.min.css' rel="stylesheet" />
+    <link href='css/style.css' rel="stylesheet" />
     <style type="text/css" src="./css/hover-min.css"></style>
     <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
   </head>
   <body class="hidden">
   <div class="content">
@@ -62,7 +65,6 @@
         <div class="intro-para-text-m">
             <i class="fa fa-smile-o" style="font-size: 5em;"></i><br />
             <h1 class="about-me-m">About Me</h1>
-            <p class="swag-m">Coder<br />Developer<br/>Student</p>
             <p class="large-para">
                 Pushpinder Singh aka Prince Dhaliwal is a student at PEC University of Technology.
                 He prefers to talk in first person instead of third person. <br />
@@ -72,6 +74,9 @@
         </div>
       </div>
     </div>
+    <section class="repo-section-m hidden" id='rsec'>
+
+    </section>
       <section class="second about-this hidden" id="section2">
             <div class="about-section">
                <div class="about-heading">
@@ -91,6 +96,7 @@
                         <div class="td"><i class="fa fa-"></i>jQuery</div>
                         <div class="td"><i class="fa fa-html5"></i> HTML5</div>
                         <div class="td"><i class="fa fa-css3"></i> CSS3</div>
+                        <div class="td">React</div>
                 </div>
                 <footer class="footer">
                     <div class="footer-small-para">
@@ -118,6 +124,8 @@
           <i class="fa fa-angle-right" style="color: #A17426; font-size: 2em; vertical-align: middle; text-align: center; width: 100%"></i>
       </div>
   </div>
-  <script src="js/main.min.js" type="text/javascript"> </script>
+  
+  <script src="js/main.js" type="text/javascript"> </script>
+  <script src="js/github-data.js" type="text/babel"></script>
   </body>
 </html>

@@ -8,6 +8,10 @@
 
 $(window).ready(function init() {
       $("section").css("height", calculateSectionHeight() + "px");
+
+      if (isMobile) {
+        $('.repo-section-m').css({"height": ''});
+      }
       $("body").removeClass("hidden");
       $("body").addClass("animated fadeInUp");
 
@@ -290,4 +294,5 @@ $(window).ready(function init() {
       $(".social").addClass("social-m").removeClass("social");
       $(".facebook-link").addClass("link").removeClass("facebook-link");
       $(".github-link").addClass("link").removeClass("github-link");
+      $(".repo-section-m").removeClass('hidden');
   }
