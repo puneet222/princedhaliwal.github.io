@@ -295,4 +295,5 @@ $(window).ready(function init() {
       $(".facebook-link").addClass("link").removeClass("facebook-link");
       $(".github-link").addClass("link").removeClass("github-link");
       $(".repo-section-m").removeClass('hidden');
+      $(".small-dialog").remove();
   }
