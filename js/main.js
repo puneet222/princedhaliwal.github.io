@@ -40,16 +40,16 @@ $(window).ready(function init() {
     }, 2500);
 });
 
-  function displayShortMessage(message) {
-      message_is_shown = true;
-      $(".dialog-text").html(message);
-      $(".small-dialog").removeClass("hidden fadeOutUp").addClass("slideInDown");
-  }
+function displayShortMessage(message) {
+    message_is_shown = true;
+    $(".dialog-text").html(message);
+    $(".small-dialog").removeClass("hidden fadeOutUp").addClass("slideInDown");
+}
 
-  function removeShortMessage() {
-      message_is_shown = false;
-      $(".small-dialog").removeClass("slideInDown").addClass("fadeOutUp");
-  }
+function removeShortMessage() {
+    message_is_shown = false;
+    $(".small-dialog").removeClass("slideInDown").addClass("fadeOutUp");
+}
 
 function fadeIn(element) {
     $(element).removeClass("hidden");
@@ -199,7 +199,7 @@ function showSection3() {
             $(".retry").on("click", function() {
                 displayShortMessage("Retrying ..");
                 showSection3();
-            });
+            }).css('cursor', 'pointer');
         });
     } catch (e) {
         $(".loading-icon").html('<h1 class="not-found">Error, try to reload</h1>');
@@ -211,10 +211,20 @@ function prepareSection4() {
     if (repos > 6 && repo_view_number < repo_view_required) {
         // show the next page of the repos
         console.log("replacing repos: repo_view_required=" + repo_view_required);
-        $(".repo").slice(0, 3).removeClass("fadeInUp").addClass("fadeOutUp").on("animationend", function() {
-            $(this).addClass("hidden").css("margin-top", "-100%");
-            $(".repo").removeClass("fadeInUp").addClass("slideInUp");
-        });
+        if (!repo_view_number)
+            $(".repo").slice(0, 3).removeClass("fadeInUp").addClass("fadeOutUp").on("animationend", function() {
+                $(this).addClass("hidden").css("margin-top", "-100%");
+                $(this).remove();
+                $(".repo").removeClass("fadeInUp").addClass("slideInUp").on('animationend', function() {
+                    $(this).removeClass('slideInUp');
+                });
+            });
+        else {
+            $(".repo").slice(0, 3).removeClass("slideInUp").addClass("fadeOutUp").on("animationend", function() {
+                $(this).addClass("hidden").css("margin-top", "-100%");
+                $(this).remove();
+            });
+        }
         repo_view_number++;
     } else {
         if (!isMobile) {
@@ -237,6 +247,11 @@ function prepareSection4() {
             });
         }
     }
+}
+
+function showSection4()
+{
+    return;
 }
 
 function onScroll(e) {
